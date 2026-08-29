@@ -1,0 +1,13 @@
+{
+  "name": "repodoc",
+  "version": "0.0.0",
+  "description": "Zero-dependency repo documentation and TODO scanner CLI",
+  "type": "module",
+  "bin": {
+    "repodoc": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,30 @@
+# RepoDoc hackathon CLI
+
+This repo is a zero-dependency Node.js CLI (RepoDoc): scan a repository, collect TODOs and line stats, and print markdown/terminal tables.
+
+## AI behavior
+
+- Implement only the module you are asked to change. Respect member ownership below.
+- Prefer small, readable stdlib code. Do not invent extra features, flags, or files.
+- Keep stubs and contracts in `src/types.js` in sync when you change data shapes.
+- Do not add CI, extra docs, or tooling unless explicitly requested.
+
+## Zero npm dependencies (hard rule)
+
+- **Node.js standard library only.** Never add third-party packages.
+- `package.json` MUST keep `"dependencies": {}`. Do not add `devDependencies` either.
+- Do not run `npm install <pkg>`. Do not import `yargs`, `commander`, `chalk`, `glob`, etc.
+- Use built-ins only, e.g. `node:fs`, `node:path`, `node:process`, `node:test`, `process.argv`.
+
+## Member ownership (keep modules aligned)
+
+| File | Owner | Role |
+|------|--------|------|
+| `src/scanner.js` | Member 1 | Directory traversal |
+| `src/analyzer.js` | Member 2 | TODO regex & line stats |
+| `src/cli.js` | Member 3 | Entry point & flags (`process.argv`) |
+| `src/formatter.js` | Member 4 | Markdown / terminal tables |
+| `test/analyzer.test.js` | Member 4 | `node:test` suite |
+| `src/types.js` | Shared | JSDoc data contracts |
+
+Do not merge another member's module into yours. Call across modules via the shared contracts.
