@@ -50,13 +50,6 @@ Options:
 `);
 }
 
-function matchesIgnore(filePath, patterns) {
-    return patterns.some(pattern =>
-        filePath.includes(pattern) ||
-        path.basename(filePath) === pattern
-    );
-}
-
 export async function main(argv = process.argv) {
     try {
         const flags = parseFlags(argv);
@@ -71,15 +64,13 @@ export async function main(argv = process.argv) {
         console.log(styleText('bold', 'RepoDoc'));
         console.log(`Scanning: ${rootDir}`);
 
-        const scannedFiles = await scanDirectory(rootDir);
-
-        const files = scannedFiles.filter(
-            file => !matchesIgnore(file, flags.ignore)
-        );
+        const scannedFiles = await scanDirectory(rootDir, {
+            ignore: flags.ignore
+        });
 
         const analyzedFiles = [];
 
-        for (const filePath of files) {
+        for (const filePath of scannedFiles) {
             try {
                 const source = await fs.readFile(filePath, 'utf8');
                 const relativePath = path.relative(rootDir, filePath);
