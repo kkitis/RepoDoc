@@ -85,12 +85,14 @@ export async function main(argv = process.argv) {
         const groups = groupByExtension(analyzedFiles);
 
         const result = {
+            root: rootDir,
             files: analyzedFiles,
             groups
         };
 
         const report = formatReport(result, {
-            format: 'markdown'
+            format: 'markdown',
+            root: rootDir
         });
 
         if (flags.output) {

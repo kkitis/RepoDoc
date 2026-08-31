@@ -14,12 +14,13 @@ export function formatReport(result, options = {}) {
   }
 
   const files = result.files;
+  const root = result.root ?? options.root ?? process.cwd();
 
   if (format === 'markdown') {
     const lines = [
       `# Codebase Report`,
       ``,
-      `**Root:** ${result.root}`,
+      `**Root:** ${root}`,
       ``,
       `## File Statistics`,
       ``,
@@ -58,7 +59,7 @@ export function formatReport(result, options = {}) {
   // Terminal format
   const output = [
     'CODEBASE REPORT',
-    `Root: ${result.root}`,
+    `Root: ${root}`,
     '',
     'FILE STATISTICS',
     '----------------'

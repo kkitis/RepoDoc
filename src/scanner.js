@@ -10,7 +10,30 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const DEFAULT_IGNORE = ['node_modules', '.git'];
+const DEFAULT_IGNORE = [
+  'node_modules',
+  '.git',
+  'dist',
+  'build',
+  'vendor',
+  'lib',
+  'coverage'
+];
+
+const TEXT_EXTENSIONS = new Set([
+  '.js',
+  '.mjs',
+  '.cjs',
+  '.ts',
+  '.tsx',
+  '.jsx',
+  '.html',
+  '.htm',
+  '.css',
+  '.json',
+  '.md',
+  '.txt'
+]);
 
 function shouldIgnore(fullPath, rootDir, patterns) {
   const relative = path.relative(rootDir, fullPath);
@@ -49,6 +72,10 @@ async function walk(dir, rootDir, patterns, files) {
     if (entry.isDirectory()) {
       await walk(fullPath, rootDir, patterns, files);
     } else if (entry.isFile()) {
+      const extension = path.extname(entry.name).toLowerCase();
+      if (!TEXT_EXTENSIONS.has(extension)) {
+        continue;
+      }
       files.push(fullPath);
     }
   }
